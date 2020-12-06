@@ -17,7 +17,21 @@ namespace SalesApp
             productService = new ProductService();
             Loaded += MainWindow_Loaded;
             ButtonAdd.Click += ButtonAdd_Click;
+            ButtonList.Click += ButtonList_Click;
 
+        }
+
+        private void ButtonList_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                dataGridProduct.ItemsSource = productService.List();
+            }
+            catch (SystemException ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
