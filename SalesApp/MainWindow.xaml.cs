@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Services.ServiceProduct;
 
 namespace SalesApp
 {
@@ -20,9 +9,41 @@ namespace SalesApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        ProductService productService;
         public MainWindow()
         {
             InitializeComponent();
+
+            productService = new ProductService();
+            Loaded += MainWindow_Loaded;
+            ButtonAdd.Click += ButtonAdd_Click;
+
+        }
+
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                productService.Add(TextBoxProductID.Text, TextBoxProductName.Text, decimal.Parse(TextBoxProductCost.Text), decimal.Parse(TextBoxProductPrice.Text));
+            }
+            catch (SystemException ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBoxProductID.Focus();
+            }
+            catch (SystemException ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
