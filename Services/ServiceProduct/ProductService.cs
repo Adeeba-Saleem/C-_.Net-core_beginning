@@ -58,9 +58,30 @@ namespace Services.ServiceProduct
             throw new NotImplementedException();
         }
 
-        product IProduct.search(string productId)
+        public product search(string productId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return List().Where(x => x.ProductId == productId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public List<product> searchByProductName(string productName)
+        {
+            try
+            {
+                return List().Where(x => x.ProductName.StartsWith(productName.ToUpper())).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
